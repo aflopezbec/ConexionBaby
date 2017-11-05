@@ -8,9 +8,10 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
         <TextView android:id="@+id/title_paired_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,6 +22,15 @@
             android:textColor="#fff"
             android:paddingLeft="5dp"
             />
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/my_surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
         <ListView android:id="@+id/paired_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

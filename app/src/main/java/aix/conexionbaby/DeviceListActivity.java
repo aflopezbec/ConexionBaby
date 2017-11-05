@@ -1,7 +1,11 @@
 package aix.conexionbaby;
 
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.io.IOException;
 import java.util.Set;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -18,11 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import entities.Torus;
+
 public class DeviceListActivity extends AppCompatActivity {
     // Debugging for LOGCAT
     private static final String TAG = "DeviceListActivity";
     private static final boolean D = true;
 
+
+    private GLSurfaceView mySurfaceView;
+    private Torus torus;
+    private AppCompatActivity active;
 
     // declare button for launching website and textview for connection status
     Button tlbutton;
@@ -39,6 +52,13 @@ public class DeviceListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
+
+        mySurfaceView = (GLSurfaceView)findViewById(R.id.my_surface_view);
+        mySurfaceView.setEGLContextClientVersion(2);
+        mySurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+        mySurfaceView.setRenderer(new MyGLRenderer());
+        mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
     }
 
     @Override

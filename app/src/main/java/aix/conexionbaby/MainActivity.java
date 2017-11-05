@@ -1,5 +1,7 @@
 package aix.conexionbaby;
 
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.IOException;
@@ -19,6 +21,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import entities.Torus;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnOn, btnOff;
@@ -31,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private StringBuilder recDataString = new StringBuilder();
 
     private ConnectedThread mConnectedThread;
+    private GLSurfaceView mySurfaceView;
+    private Torus torus;
+    private AppCompatActivity active;
 
     // SPP UUID service - this should work for most devices
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -43,16 +53,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        active = this;
         //Link the buttons and textViews to respective views
-        btnOn = (Button) findViewById(R.id.buttonOn);
-        btnOff = (Button) findViewById(R.id.buttonOff);
-        txtString = (TextView) findViewById(R.id.txtString);
-        txtStringLength = (TextView) findViewById(R.id.testView1);
         sensorView0 = (TextView) findViewById(R.id.sensorView0);
         sensorView1 = (TextView) findViewById(R.id.sensorView1);
         sensorView2 = (TextView) findViewById(R.id.sensorView2);
         sensorView3 = (TextView) findViewById(R.id.sensorView3);
+
+
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -89,21 +97,6 @@ public class MainActivity extends AppCompatActivity {
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
-
-        // Set up onClick listeners for buttons to send 1 or 0 to turn on/off LED
-        btnOff.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                mConnectedThread.write("0");    // Send "0" via Bluetooth
-                Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnOn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                mConnectedThread.write("1");    // Send "1" via Bluetooth
-                Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
