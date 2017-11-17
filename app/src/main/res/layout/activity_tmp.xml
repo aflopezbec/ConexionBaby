@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="aix.conexionbaby.tmpActivity">
+
  <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="344dp"
-        android:layout_height="496dp"
+        android:layout_height="495dp"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+     tools:layout_editor_absoluteY="8dp"
+     tools:layout_editor_absoluteX="8dp">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -108,3 +117,4 @@
             android:text="Respiración: ALTO>"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+</android.support.constraint.ConstraintLayout>

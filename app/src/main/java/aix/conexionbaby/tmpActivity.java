@@ -1,5 +1,6 @@
 package aix.conexionbaby;
 
+import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,12 @@ public class tmpActivity extends AppCompatActivity {
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
+    private String sensor0,txtTemperatura;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tmp);
-        setTitle("GUDBI - Monitor");
 
         active = this;
         mMyGL = new MyGLRenderer();
@@ -37,6 +39,8 @@ public class tmpActivity extends AppCompatActivity {
         mySurfaceView.setRenderer(mMyGL);
         mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
+        sensor0 = "34.5";
+        txtTemperatura = "La temperatura corporal del bebé es de ##.# grados. \nSeria bueno revisar al bebé";
         //float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
         //float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
         //mMyGL.changeColor(color);
@@ -48,7 +52,7 @@ public class tmpActivity extends AppCompatActivity {
                 mMyGL.changeColor(color);
                 AlertDialog.Builder builder = new AlertDialog.Builder(active);
                 builder.setTitle("Información Temperatura");
-                builder.setMessage("La temperatura corporal del bebé es de ##.# grados. \nSeria bueno revisar al bebé");
+                builder.setMessage(txtTemperatura);//"La temperatura corporal del bebé es de ##.# grados. \nSeria bueno revisar al bebé");
                 builder.setPositiveButton("OK",null);
                 builder.create();
                 builder.show();
@@ -66,6 +70,19 @@ public class tmpActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK",null);
                 builder.create();
                 builder.show();
+
+                Double valueTemperatura = Double.valueOf(sensor0);
+                if (valueTemperatura<35){
+                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
+                    temperatura.setText("Temperatura: MEDIO >");
+                    temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
+                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
+                    temperatura.setText("Temperatura: BAJO >");
+                    temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
+                }
+                sensor0 = "36.2";
+
 
             }
         });

@@ -1,35 +1,26 @@
 package aix.conexionbaby;
 
-import android.opengl.GLES20;
+import android.graphics.Color;
 import android.opengl.GLSurfaceView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
-import android.app.Activity;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
-import entities.Torus;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnOn, btnOff;
-    TextView txtArduino, txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3;
     Handler bluetoothIn;
 
     final int handlerState = 0;        				 //used to identify handler message
@@ -38,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private StringBuilder recDataString = new StringBuilder();
 
     private ConnectedThread mConnectedThread;
-    private GLSurfaceView mySurfaceView;
-    private Torus torus;
-    private AppCompatActivity active;
 
     // SPP UUID service - this should work for most devices
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -48,18 +36,37 @@ public class MainActivity extends AppCompatActivity {
     // String for MAC address
     private static String address;
 
+    //Values of interfaz
+    private GLSurfaceView mySurfaceView;
+    private Button temperatura;
+    private Button posicion;
+    private Button respiraacion;
+    private MyGLRenderer mMyGL;
+    private AppCompatActivity active;
+
+    String txtTemperatura, txtPosicion, txtRespiracion;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        active = this;
-        //Link the buttons and textViews to respective views
-        sensorView0 = (TextView) findViewById(R.id.sensorView0);
-        sensorView1 = (TextView) findViewById(R.id.sensorView1);
-        sensorView2 = (TextView) findViewById(R.id.sensorView2);
-        sensorView3 = (TextView) findViewById(R.id.sensorView3);
 
+        //Final code of tmp
+        active = this;
+        mMyGL = new MyGLRenderer();
+
+        mySurfaceView = (GLSurfaceView)findViewById(R.id.my_surface_view);
+        temperatura = (Button) findViewById(R.id.btn_temperatura);
+        posicion = (Button) findViewById(R.id.btn_posicion);
+        respiraacion = (Button) findViewById(R.id.btn_respiracion);
+
+        mySurfaceView.setEGLContextClientVersion(2);
+        mySurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+        mySurfaceView.setRenderer(mMyGL);
+        mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
+        txtTemperatura = txtPosicion = txtRespiracion = "Todo se encuentra en normalidad";
 
 
         bluetoothIn = new Handler() {
@@ -70,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     int endOfLineIndex = recDataString.indexOf("~");                    // determine the end-of-line
                     if (endOfLineIndex > 0) {                                           // make sure there data before ~
                         String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
-                        txtString.setText("Data Received = " + dataInPrint);
+                        //txtString.setText("Data Received = " + dataInPrint);
                         int dataLength = dataInPrint.length();							//get length of data received
-                        txtStringLength.setText("String Length = " + String.valueOf(dataLength));
+                        //txtStringLength.setText("String Length = " + String.valueOf(dataLength));
 
                         if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
                         {
@@ -81,10 +88,30 @@ public class MainActivity extends AppCompatActivity {
                             String sensor2 = recDataString.substring(14, 20);
                             String sensor3 = recDataString.substring(21, 25);
 
-                            sensorView0.setText(" Temperatura = " + sensor0 + " C");	//update the textviews with sensor values
-                            sensorView1.setText(" Posición 1 = " + sensor1 + " °");
-                            sensorView2.setText(" Posición 2 = " + sensor2 + " °");
-                            sensorView3.setText(" Respiración = " + sensor3 + " G");
+                            Double valueTemperatura = Double.valueOf(sensor0);
+                            if (valueTemperatura<35.5){
+                                txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
+                                temperatura.setText("Temperatura: MEDIO >");
+                                temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                            }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
+                                txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
+                                temperatura.setText("Temperatura: BAJO >");
+                                temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
+                            }else if (valueTemperatura>38.4){
+                                txtTemperatura="El bebé se encuentra en una temperatura Mas alta de lo normal.\n tiene "+sensor0+"° de temperatura";
+                                temperatura.setText("Temperatura: ALTO >");
+                                temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                            }else{
+                                txtTemperatura="ERROR";
+                                temperatura.setText("Temperatura: ALTO >");
+                                temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                            }
+
+
+                            //sensorView0.setText(" Temperatura = " + sensor0 + " C");	//update the textviews with sensor values
+                            //sensorView1.setText(" Posición 1 = " + sensor1 + " °");
+                            //sensorView2.setText(" Posición 2 = " + sensor2 + " °");
+                            //sensorView3.setText(" Respiración = " + sensor3 + " G");
                         }
                         recDataString.delete(0, recDataString.length()); 					//clear all string data
                         // strIncom =" ";
@@ -96,6 +123,51 @@ public class MainActivity extends AppCompatActivity {
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
+
+
+        temperatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
+                mMyGL.changeColor(color);
+                AlertDialog.Builder builder = new AlertDialog.Builder(active);
+                builder.setTitle("Información Temperatura");
+                builder.setMessage(txtTemperatura);
+                builder.setPositiveButton("OK",null);
+                builder.create();
+                builder.show();
+            }
+        });
+
+        posicion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
+                mMyGL.changeColor(color);
+                AlertDialog.Builder builder = new AlertDialog.Builder(active);
+                builder.setTitle("Información Posición");
+                builder.setMessage(txtPosicion);
+                builder.setPositiveButton("OK",null);
+                builder.create();
+                builder.show();
+
+            }
+        });
+
+        respiraacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
+                mMyGL.changeColor(color);
+                AlertDialog.Builder builder = new AlertDialog.Builder(active);
+                builder.setTitle("Información Respiración");
+                builder.setMessage(txtRespiracion);
+                builder.setPositiveButton("OK",null);
+                builder.create();
+                builder.show();
+
+            }
+        });
 
     }
 
