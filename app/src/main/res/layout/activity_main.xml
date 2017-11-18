@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="#FFFF"
     tools:context="aix.conexionbaby.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -54,136 +55,154 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_general"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
-            android:background="#5cb85c"
-            android:elevation="5dp"
-            android:text="Riesgo: BAJO"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/textView2"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/btn_general"
-            android:layout_marginTop="13dp"
-            android:text="Nivel de riesgo especifico"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:textAlignment="center">
 
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/my_surface_view"
-            android:layout_marginTop="12dp"
-            android:text="Nivel de riesgo general"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_general"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="14dp"
+                android:background="#5cb85c"
+                android:elevation="5dp"
+                android:text="Riesgo: BAJO"
+                android:textColor="#FFFFFF" />
 
-        <android.opengl.GLSurfaceView
-            android:id="@+id/my_surface_view"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/btn_general"
+                android:layout_marginTop="13dp"
+                android:text="Nivel de riesgo especifico"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_temperatura"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/btn_general"
-            android:layout_alignStart="@+id/btn_general"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="17dp"
-            android:background="@color/colorPrimaryDark"
-            android:elevation="24dp"
-            android:text="Temperatura: BAJO"
-            android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/my_surface_view"
+                android:layout_marginTop="12dp"
+                android:text="Nivel de riesgo general"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_posicion"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/btn_temperatura"
-            android:layout_alignStart="@+id/btn_temperatura"
-            android:layout_below="@+id/btn_temperatura"
-            android:layout_marginTop="12dp"
-            android:background="@color/colorPrimaryDark"
-            android:elevation="5dp"
-            android:text="Posición: ALTO"
-            android:textColor="#FFFFFF" />
+            <android.opengl.GLSurfaceView
+                android:id="@+id/my_surface_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
 
-        <Button
-            android:id="@+id/btn_respiracion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/btn_posicion"
-            android:layout_alignLeft="@+id/btn_posicion"
-            android:layout_alignRight="@+id/btn_posicion"
-            android:layout_alignStart="@+id/btn_posicion"
-            android:layout_below="@+id/btn_posicion"
-            android:layout_marginTop="13dp"
-            android:background="@color/colorPrimaryDark"
-            android:elevation="5dp"
-            android:text="Respiración: MEDIO"
-            android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/btn_temperatura"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/btn_general"
+                android:layout_alignStart="@+id/btn_general"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="17dp"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="24dp"
+                android:text="Temperatura: BAJO"
+                android:textColor="#FFFFFF" />
 
-        <ImageButton
-            android:id="@+id/infoTemperatura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_posicion"
-            android:layout_alignTop="@+id/btn_temperatura"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@+id/btn_temperatura"
-            android:background="#FFFF"
-            app:srcCompat="@drawable/bajo_32" />
+            <Button
+                android:id="@+id/btn_posicion"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/btn_temperatura"
+                android:layout_alignStart="@+id/btn_temperatura"
+                android:layout_below="@+id/btn_temperatura"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="5dp"
+                android:text="Posición: ALTO"
+                android:textColor="#FFFFFF" />
 
-        <ImageButton
-            android:id="@+id/infoPosicion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_respiracion"
-            android:layout_alignTop="@+id/btn_posicion"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@+id/btn_posicion"
-            android:background="#FFFF"
-            app:srcCompat="@drawable/alto_32" />
+            <Button
+                android:id="@+id/btn_respiracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/btn_posicion"
+                android:layout_alignLeft="@+id/btn_posicion"
+                android:layout_alignRight="@+id/btn_posicion"
+                android:layout_alignStart="@+id/btn_posicion"
+                android:layout_below="@+id/btn_posicion"
+                android:layout_marginTop="13dp"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="5dp"
+                android:text="Respiración: MEDIO"
+                android:textColor="#FFFFFF" />
 
-        <ImageButton
-            android:id="@+id/infoRespiracion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#FFFF"
-            app:srcCompat="@drawable/medio_32"
-            android:layout_alignTop="@+id/btn_respiracion"
-            android:layout_alignLeft="@+id/infoPosicion"
-            android:layout_alignStart="@+id/infoPosicion"
-            android:layout_alignBottom="@+id/btn_respiracion" />
+            <ImageButton
+                android:id="@+id/infoTemperatura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_posicion"
+                android:layout_alignTop="@+id/btn_temperatura"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@+id/btn_temperatura"
+                android:background="#FFFF"
+                app:srcCompat="@drawable/bajo_32" />
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/infoPosicion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_respiracion"
+                android:layout_alignTop="@+id/btn_posicion"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@+id/btn_posicion"
+                android:background="#FFFF"
+                app:srcCompat="@drawable/alto_32" />
+
+            <ImageButton
+                android:id="@+id/infoRespiracion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFFF"
+                app:srcCompat="@drawable/medio_32"
+                android:layout_alignTop="@+id/btn_respiracion"
+                android:layout_alignLeft="@+id/infoPosicion"
+                android:layout_alignStart="@+id/infoPosicion"
+                android:layout_alignBottom="@+id/btn_respiracion" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/btn_respiracion"
+                android:layout_marginTop="40dp"
+                android:text="Developed by Andrés López  - andflopezbec@unal.edu.co" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 
 </LinearLayout>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="aix.conexionbaby.AboutUs"
+    tools:showIn="@layout/activity_about_us"
+    android:background="#FFFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/andres"
+            android:layout_below="@+id/creators"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Andrés Felipe López"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_below="@+id/creators"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingenieía de sistemas y computación"
+            android:layout_below="@+id/textView3"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="andflopezbec@unal.edu.co"
+            android:layout_below="@+id/textView4"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ernesto"
+            android:layout_below="@id/imageView"/>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ernesto Bravo reina"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_below="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView4"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView12"
+            android:layout_toEndOf="@+id/imageView4"
+            android:layout_toRightOf="@+id/imageView4"
+            android:text="Diseño industrial" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView13"
+            android:layout_toEndOf="@+id/imageView4"
+            android:layout_toRightOf="@+id/imageView4"
+            android:text="erbravore@unal.edu.co" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/juan"
+            android:layout_below="@id/imageView4"/>
+
+        <TextView
+            android:id="@+id/textView121"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView4"
+            android:layout_toRightOf="@+id/imageView5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Juan David Ramirez G"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView131"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView121"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_toRightOf="@+id/imageView5"
+            android:text="Ingeniería electrónica" />
+
+        <TextView
+            android:id="@+id/textView141"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView131"
+            android:layout_toEndOf="@+id/imageView5"
+            android:layout_toRightOf="@+id/imageView5"
+            android:text="judramirezgu@unal.edu.co" />
+
+        <ImageView
+            android:id="@+id/imagelui"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/luis"
+            android:layout_below="@id/imageView5"/>
+
+        <TextView
+            android:id="@+id/textVie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView5"
+            android:layout_toRightOf="@+id/imagelui"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Luis Miguel Sanabria C"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textVie1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textVie"
+            android:layout_toEndOf="@+id/imagelui"
+            android:layout_toRightOf="@+id/imagelui"
+            android:text="Ingeniería Mecatrónica" />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textVie1"
+            android:layout_toEndOf="@+id/imagelui"
+            android:layout_toRightOf="@+id/imagelui"
+            android:text="judramirezgu@unal.edu.co" />
+
+        <ImageView
+            android:id="@+id/imagenicolas"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/nicolas"
+            android:layout_below="@id/imagelui"/>
+
+        <TextView
+            android:id="@+id/textnicolasname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imagelui"
+            android:layout_toRightOf="@+id/imagenicolas"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Nicolas Huertas Espitia"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textnicolascr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textnicolasname"
+            android:layout_toEndOf="@+id/imagenicolas"
+            android:layout_toRightOf="@+id/imagenicolas"
+            android:text="Ingeniería Civil" />
+
+        <TextView
+            android:id="@+id/textcorreonicoles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textnicolascr"
+            android:layout_toEndOf="@+id/imagenicolas"
+            android:layout_toRightOf="@+id/imagenicolas"
+            android:text="nhuertase@unal.edu.co" />
+
+        <ImageView
+            android:id="@+id/imagesergio"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/sergio"
+            android:layout_below="@id/imagenicolas"/>
+
+        <TextView
+            android:id="@+id/textnamesergio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imagenicolas"
+            android:layout_toRightOf="@+id/imagesergio"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Sergio Andrés Ortis B"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textcrsergio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textnamesergio"
+            android:layout_toEndOf="@+id/imagesergio"
+            android:layout_toRightOf="@+id/imagesergio"
+            android:text="Ingeniería Civil" />
+
+        <TextView
+            android:id="@+id/textcorreosergio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textcrsergio"
+            android:layout_toEndOf="@+id/imagesergio"
+            android:layout_toRightOf="@+id/imagesergio"
+            android:text="saortizb@unal.edu.co" />
+
+        <ImageView
+            android:id="@+id/imagesteven"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/steven"
+            android:layout_below="@id/imagesergio"/>
+
+        <TextView
+            android:id="@+id/textnamesteven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imagesergio"
+            android:layout_toRightOf="@+id/imagesteven"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="Steven Andrey Galeano Z."
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textcrsteven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textnamesteven"
+            android:layout_toEndOf="@+id/imagesteven"
+            android:layout_toRightOf="@+id/imagesteven"
+            android:text="Ingeniería Mecatrónica" />
+
+        <TextView
+            android:id="@+id/textcorreoste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textcrsteven"
+            android:layout_toEndOf="@+id/imagesteven"
+            android:layout_toRightOf="@+id/imagesteven"
+            android:text="sagaleanoz@unal.edu.co" />
+
+        <TextView
+            android:id="@+id/aboutgudbi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/gugbi_about" />
+
+        <TextView
+            android:id="@+id/creators"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_below="@id/aboutgudbi"
+            android:text="Creadores: " />
+
+    </RelativeLayout>
+
+
+
+</android.support.v4.widget.NestedScrollView>

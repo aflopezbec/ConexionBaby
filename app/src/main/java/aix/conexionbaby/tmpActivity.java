@@ -1,5 +1,6 @@
 package aix.conexionbaby;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AlertDialog;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,9 +20,9 @@ public class tmpActivity extends AppCompatActivity {
     private Button temperatura;
     private Button posicion;
     private Button respiraacion;
-    private ImageButton infotemperatura;
-    private ImageButton infoposicion;
-    private ImageButton inforespiracion;
+    private ImageButton imageTemperatura;
+    private ImageButton imagePosicion;
+    private ImageButton imageRespiracion;
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
@@ -41,9 +43,9 @@ public class tmpActivity extends AppCompatActivity {
         temperatura = (Button) findViewById(R.id.btn_temperatura);
         posicion = (Button) findViewById(R.id.btn_posicion);
         respiraacion = (Button) findViewById(R.id.btn_respiracion);
-        infotemperatura = (ImageButton) findViewById(R.id.infoTemperatura);
-        inforespiracion = (ImageButton) findViewById(R.id.infoRespiracion);
-        infoposicion = (ImageButton) findViewById(R.id.infoPosicion);
+        imageTemperatura = (ImageButton) findViewById(R.id.infoTemperatura);
+        imageRespiracion = (ImageButton) findViewById(R.id.infoRespiracion);
+        imagePosicion = (ImageButton) findViewById(R.id.infoPosicion);
 
 
         mySurfaceView.setEGLContextClientVersion(2);
@@ -87,7 +89,7 @@ public class tmpActivity extends AppCompatActivity {
                 if (valueTemperatura<35){
                     txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
                     temperatura.setText("Temperatura: MEDIO");
-                    infotemperatura.setImageResource(R.drawable.medio_32);
+                    imageTemperatura.setImageResource(R.drawable.medio_32);
                     //temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
                 }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
                     txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
@@ -121,5 +123,14 @@ public class tmpActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.add_phrase){
+            startActivity(new Intent(getApplicationContext(), AboutUs.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

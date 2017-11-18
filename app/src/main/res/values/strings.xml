@@ -4,4 +4,14 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="none_paired">No devices have been paired</string>
+    <string name="title_activity_about_us">Acerca de Gudbi</string>
+    <string name="gugbi_about">Gudbi es un dispositivo electrónico diseñado para
+adaptarse a cualquier tipo de prenda suave del bebé
+(camisas, bodies o prendas delicadas), con el objeto
+de facilitar su portabilidad y su uso en cualquier momento.
+Es capaz de monitorear constantemente la
+temperatura, posición y respiración del bebé. Para asi
+enviar la infomación mediante Bluetooth a una aplicación
+móvil, la cual alerta en caso de encontrar
+alguna anomalia.</string>
 </resources>

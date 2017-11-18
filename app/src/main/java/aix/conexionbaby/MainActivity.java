@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private Button temperatura;
     private Button posicion;
     private Button respiraacion;
+    private ImageButton imageTemperatura;
+    private ImageButton imagePosicion;
+    private ImageButton imageRespiracion;
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
@@ -69,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         temperatura = (Button) findViewById(R.id.btn_temperatura);
         posicion = (Button) findViewById(R.id.btn_posicion);
         respiraacion = (Button) findViewById(R.id.btn_respiracion);
+        imageTemperatura = (ImageButton) findViewById(R.id.infoTemperatura);
+        imageRespiracion = (ImageButton) findViewById(R.id.infoRespiracion);
+        imagePosicion = (ImageButton) findViewById(R.id.infoPosicion);
 
         mySurfaceView.setEGLContextClientVersion(2);
         mySurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
@@ -92,32 +99,87 @@ public class MainActivity extends AppCompatActivity {
 
                         if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
                         {
-                            String sensor0 = recDataString.substring(1, 6);             //get sensor value from string between indices 1-5
-                            String sensor1 = recDataString.substring(7, 13);            //same again...
-                            String sensor2 = recDataString.substring(14, 20);
-                            String sensor3 = recDataString.substring(21, 25);
+                            String sensorTemperatura = recDataString.substring(1, 6);             //get sensor value from string between indices 1-5
+                            String sensorPitch = recDataString.substring(7, 12);            //same again...
+                            String sensorRoll = recDataString.substring(13, 18);
+                            String sensorRespiracion = recDataString.substring(19, 25);
 
                             try {
-                                Double valueTemperatura = Double.valueOf(sensor0);
+                                Double valueTemperatura = Double.valueOf(sensorTemperatura);
                                 if (valueTemperatura<35.5){
-                                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
-                                    temperatura.setText("Temperatura: MEDIO >");
+                                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensorTemperatura+"°";
+                                    temperatura.setText("Temperatura: MEDIO");
                                     levelTemperatura = MEDIO;
-                                    temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                                    //temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                                    imageTemperatura.setImageResource(R.drawable.medio_32);
                                 }else if (valueTemperatura>35.4 && valueTemperatura<37.9){
-                                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
-                                    temperatura.setText("Temperatura: BAJO >");
+                                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensorTemperatura+"°";
+                                    temperatura.setText("Temperatura: BAJO");
                                     levelTemperatura = BAJO;
-                                    temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
+                                    //temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
+                                    imageTemperatura.setImageResource(R.drawable.bajo_32);
                                 }else if (valueTemperatura>37.8){
-                                    txtTemperatura="El bebé se encuentra en una temperatura Mas alta de lo normal.\n tiene "+sensor0+"° de temperatura";
-                                    temperatura.setText("Temperatura: ALTO >");
-                                    temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                    txtTemperatura="El bebé se encuentra en una temperatura mas alta de lo normal.\n tiene "+sensorTemperatura+"° de temperatura";
+                                    temperatura.setText("Temperatura: ALTO");
+                                    //temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                    imageTemperatura.setImageResource(R.drawable.alto_32);
                                 }else{
                                     txtTemperatura="ERROR";
                                     temperatura.setText("Temperatura: ALTO >");
                                     levelTemperatura = ALTO;
-                                    temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                    imageTemperatura.setImageResource(R.drawable.alto_32);
+                                    //temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                }
+
+                                Double valuePitch = Double.valueOf(sensorPitch);
+                                if (valuePitch>0){
+                                    txtPosicion = "El bebe se encuentra boca arriba ";
+                                    posicion.setText("Posición: BAJO");
+                                    levelPosicion = BAJO;
+                                    imagePosicion.setImageResource(R.drawable.bajo_32);
+                                }else if (valuePitch<=0){
+                                    txtPosicion = "El bebe se encuentra boca abajo ";
+                                    posicion.setText("Posición: MEDIO");
+                                    levelPosicion = MEDIO;
+                                    imagePosicion.setImageResource(R.drawable.medio_32);
+                                }else{
+                                    txtPosicion = "ERROR ";
+                                    posicion.setText("Posición: ALTO");
+                                    levelPosicion = ALTO;
+                                    imagePosicion.setImageResource(R.drawable.alto_32);
+                                }
+
+                                Double valueRoll = Double.valueOf(sensorRoll);
+                                if (valueRoll>0){
+                                    txtPosicion = txtPosicion+" hacia el lado derecho ";
+                                }else if (valueRoll<=0){
+                                    txtPosicion = txtPosicion+" hacia el lado izquierdo ";
+                                }else{
+                                    txtPosicion = txtPosicion+" ERROR ";
+                                    posicion.setText("Posición: ALTO");
+                                    levelPosicion = ALTO;
+                                    imagePosicion.setImageResource(R.drawable.alto_32);
+                                }
+
+                                if(!sensorRespiracion.equals("nan")){
+                                    Double valueRespiracion = Double.valueOf(sensorRespiracion);
+                                    if (valueRespiracion>50){
+                                        txtRespiracion = "El bebe presenta una correcta respiración ";
+                                        respiraacion.setText("Respiración: BAJO");
+                                        levelRespiracion = BAJO;
+                                        imageRespiracion.setImageResource(R.drawable.bajo_32);
+                                    }else if (valueRespiracion<=50){
+                                        txtRespiracion = "El bebe spresenta una respiración muy lenta";
+                                        respiraacion.setText("Posición: ALTO");
+                                        levelRespiracion = MEDIO;
+                                        imageRespiracion.setImageResource(R.drawable.medio_32);
+                                    }else{
+                                        txtRespiracion = "ERROR ";
+                                        respiraacion.setText("Posición: ALTO");
+                                        levelRespiracion = ALTO;
+                                        imageRespiracion.setImageResource(R.drawable.alto_32);
+                                    }
+
                                 }
 
                             }catch (Exception e){
