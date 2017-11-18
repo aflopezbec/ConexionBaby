@@ -15,6 +15,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatActivity active;
 
     String txtTemperatura, txtPosicion, txtRespiracion;
+
+    private static final int BAJO = -1;
+    private static final int MEDIO = 0;
+    private static final int ALTO = 1;
+
+    private int levelTemperatura;
+    private int levelRespiracion;
+    private int levelPosicion;
 
 
     @Override
@@ -88,25 +97,32 @@ public class MainActivity extends AppCompatActivity {
                             String sensor2 = recDataString.substring(14, 20);
                             String sensor3 = recDataString.substring(21, 25);
 
-                            Double valueTemperatura = Double.valueOf(sensor0);
-                            if (valueTemperatura<35.5){
-                                txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
-                                temperatura.setText("Temperatura: MEDIO >");
-                                temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
-                            }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
-                                txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
-                                temperatura.setText("Temperatura: BAJO >");
-                                temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
-                            }else if (valueTemperatura>38.4){
-                                txtTemperatura="El bebé se encuentra en una temperatura Mas alta de lo normal.\n tiene "+sensor0+"° de temperatura";
-                                temperatura.setText("Temperatura: ALTO >");
-                                temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
-                            }else{
-                                txtTemperatura="ERROR";
-                                temperatura.setText("Temperatura: ALTO >");
-                                temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
-                            }
+                            try {
+                                Double valueTemperatura = Double.valueOf(sensor0);
+                                if (valueTemperatura<35.5){
+                                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
+                                    temperatura.setText("Temperatura: MEDIO >");
+                                    levelTemperatura = MEDIO;
+                                    temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                                }else if (valueTemperatura>35.4 && valueTemperatura<37.9){
+                                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
+                                    temperatura.setText("Temperatura: BAJO >");
+                                    levelTemperatura = BAJO;
+                                    temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
+                                }else if (valueTemperatura>37.8){
+                                    txtTemperatura="El bebé se encuentra en una temperatura Mas alta de lo normal.\n tiene "+sensor0+"° de temperatura";
+                                    temperatura.setText("Temperatura: ALTO >");
+                                    temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                }else{
+                                    txtTemperatura="ERROR";
+                                    temperatura.setText("Temperatura: ALTO >");
+                                    levelTemperatura = ALTO;
+                                    temperatura.setBackgroundColor(Color.parseColor("#d9534f"));
+                                }
 
+                            }catch (Exception e){
+                                Log.d("Error leyendo dato", e.toString());
+                            }
 
                             //sensorView0.setText(" Temperatura = " + sensor0 + " C");	//update the textviews with sensor values
                             //sensorView1.setText(" Posición 1 = " + sensor1 + " °");

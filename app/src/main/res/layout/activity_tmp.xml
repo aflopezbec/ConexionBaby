@@ -1,120 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="aix.conexionbaby.tmpActivity">
-
- <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="344dp"
-        android:layout_height="495dp"
-        android:orientation="vertical"
-        android:weightSum="1"
-     tools:layout_editor_absoluteY="8dp"
-     tools:layout_editor_absoluteX="8dp">
+    android:background="#FFFF"
+    tools:context="aix.conexionbaby.tmpActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:src="@drawable/bebe"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:src="@drawable/bebe" />
 
             <LinearLayout
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
                 <TextView
-                    android:textColor="#fff"
-                    android:text="GUDBI - Monitor"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="GUDBI - Monitor de bebe"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="#fff" />
 
                 <View
-                    android:background="#fff"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_height="2dp"
                     android:layout_marginEnd="30dp"
-                    android:layout_height="2dp" />
+                    android:layout_marginRight="30dp"
+                    android:background="#fff" />
+
             </LinearLayout>
 
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="center">
+
+        <Button
+            android:id="@+id/btn_general"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:background="#5cb85c"
+            android:elevation="5dp"
+            android:text="Riesgo: BAJO"
+            android:textColor="#FFFFFF" />
+
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Monitor de bebé"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_general"
+            android:layout_marginTop="13dp"
+            android:text="Nivel de riesgo especifico"
             android:textAlignment="center"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#7cacd4"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/my_surface_view"
+            android:layout_marginTop="12dp"
+            android:text="Nivel de riesgo general"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22dp"
+            android:textStyle="bold" />
 
         <android.opengl.GLSurfaceView
             android:id="@+id/my_surface_view"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Nivel de riesgo especifico:"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="#7cacd4"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btn_temperatura"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_marginRight="10dp"
-            android:background="#5cb85c"
-            android:elevation="5dp"
-            android:text="Temperatura: BAJO>"
+            android:layout_alignLeft="@+id/btn_general"
+            android:layout_alignStart="@+id/btn_general"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="17dp"
+            android:background="@color/colorPrimaryDark"
+            android:elevation="24dp"
+            android:text="Temperatura: BAJO"
             android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_posicion"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_marginRight="10dp"
-            android:background="#f0ad4e"
+            android:layout_alignLeft="@+id/btn_temperatura"
+            android:layout_alignStart="@+id/btn_temperatura"
+            android:layout_below="@+id/btn_temperatura"
+            android:layout_marginTop="12dp"
+            android:background="@color/colorPrimaryDark"
             android:elevation="5dp"
-            android:text="Posición: MEDIO>"
+            android:text="Posición: ALTO"
             android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_respiracion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_marginRight="10dp"
-            android:background="#d9534f"
+            android:layout_alignEnd="@+id/btn_posicion"
+            android:layout_alignLeft="@+id/btn_posicion"
+            android:layout_alignRight="@+id/btn_posicion"
+            android:layout_alignStart="@+id/btn_posicion"
+            android:layout_below="@+id/btn_posicion"
+            android:layout_marginTop="13dp"
+            android:background="@color/colorPrimaryDark"
             android:elevation="5dp"
-            android:text="Respiración: ALTO>"
+            android:text="Respiración: MEDIO"
             android:textColor="#FFFFFF" />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/infoTemperatura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_posicion"
+            android:layout_alignTop="@+id/btn_temperatura"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@+id/btn_temperatura"
+            android:background="#FFFF"
+            app:srcCompat="@drawable/bajo_32" />
+
+        <ImageButton
+            android:id="@+id/infoPosicion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_respiracion"
+            android:layout_alignTop="@+id/btn_posicion"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@+id/btn_posicion"
+            android:background="#FFFF"
+            app:srcCompat="@drawable/alto_32" />
+
+        <ImageButton
+            android:id="@+id/infoRespiracion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFF"
+            app:srcCompat="@drawable/medio_32"
+            android:layout_alignTop="@+id/btn_respiracion"
+            android:layout_alignLeft="@+id/infoPosicion"
+            android:layout_alignStart="@+id/infoPosicion"
+            android:layout_alignBottom="@+id/btn_respiracion" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
