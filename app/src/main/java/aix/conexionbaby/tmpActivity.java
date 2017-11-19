@@ -26,12 +26,13 @@ public class tmpActivity extends AppCompatActivity {
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
-    private String sensor0,txtTemperatura;
+    private String txtTemperatura,sensorTemperatura;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tmp);
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
@@ -53,8 +54,17 @@ public class tmpActivity extends AppCompatActivity {
         mySurfaceView.setRenderer(mMyGL);
         mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
-        sensor0 = "34.5";
-        txtTemperatura = "La temperatura corporal del bebé es de ##.# grados. \nSeria bueno revisar al bebé";
+        String dataInPrint = "#34.59|-1.68&-0.04|0.00|~";
+        String [] sensorArray = dataInPrint.split("\\|");
+        String [] positionArray = sensorArray[1].split("&");
+
+        sensorTemperatura = sensorArray[0].substring(1);             //get sensor value from string between indices 1-5
+        String sensorPitch = positionArray[0];            //same again...
+        String sensorRoll = positionArray[1];
+        String sensorRespiracion = sensorArray[2];
+
+        //sensor0 = "34.5";
+        txtTemperatura = "T: "+sensorTemperatura+" Pi: "+sensorPitch+" Roll: "+sensorRoll+" Res: "+sensorRespiracion;
         //float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
         //float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
         //mMyGL.changeColor(color);
@@ -85,18 +95,18 @@ public class tmpActivity extends AppCompatActivity {
                 builder.create();
                 builder.show();
 
-                Double valueTemperatura = Double.valueOf(sensor0);
+                Double valueTemperatura = Double.valueOf(sensorTemperatura);
                 if (valueTemperatura<35){
-                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensor0+"°";
+                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensorTemperatura+"°";
                     temperatura.setText("Temperatura: MEDIO");
                     imageTemperatura.setImageResource(R.drawable.medio_32);
                     //temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
                 }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
-                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensor0+"°";
+                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensorTemperatura+"°";
                     temperatura.setText("Temperatura: BAJO");
                     //temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
                 }
-                sensor0 = "36.2";
+                sensorTemperatura = "36.2";
 
 
             }

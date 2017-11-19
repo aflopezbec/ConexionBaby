@@ -14,4 +14,8 @@ temperatura, posición y respiración del bebé. Para asi
 enviar la infomación mediante Bluetooth a una aplicación
 móvil, la cual alerta en caso de encontrar
 alguna anomalia.</string>
+
+    <string name="title_activity_splash">GUDBI</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

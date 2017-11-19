@@ -15,10 +15,14 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
+    private TextView info;
+
     String txtTemperatura, txtPosicion, txtRespiracion;
 
     private static final int BAJO = -1;
@@ -59,11 +65,23 @@ public class MainActivity extends AppCompatActivity {
     private int levelRespiracion;
     private int levelPosicion;
 
+    private Double valueRespiracion;
+    private Double firstTime = 0.0;
+    private Double secondTime = 0.0;
+    private Double threeTime = 0.0;
+    private byte count = -1;
+    private Double sumValue = 0.0;
+    private int total = 0;
+    private int counter = 0;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
         //Final code of tmp
         active = this;
@@ -77,12 +95,15 @@ public class MainActivity extends AppCompatActivity {
         imageRespiracion = (ImageButton) findViewById(R.id.infoRespiracion);
         imagePosicion = (ImageButton) findViewById(R.id.infoPosicion);
 
+        info = (TextView) findViewById(R.id.textView6);
+
         mySurfaceView.setEGLContextClientVersion(2);
         mySurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
         mySurfaceView.setRenderer(mMyGL);
         mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
         txtTemperatura = txtPosicion = txtRespiracion = "Todo se encuentra en normalidad";
+
 
 
         bluetoothIn = new Handler() {
@@ -99,10 +120,13 @@ public class MainActivity extends AppCompatActivity {
 
                         if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
                         {
-                            String sensorTemperatura = recDataString.substring(1, 6);             //get sensor value from string between indices 1-5
-                            String sensorPitch = recDataString.substring(7, 12);            //same again...
-                            String sensorRoll = recDataString.substring(13, 18);
-                            String sensorRespiracion = recDataString.substring(19, 25);
+                            String [] sensorArray = dataInPrint.split("\\|");
+                            String [] positionArray = sensorArray[1].split("&");
+
+                            String sensorTemperatura = sensorArray[0].substring(1);
+                            String sensorPitch = positionArray[0];
+                            String sensorRoll = positionArray[1];
+                            String sensorRespiracion = sensorArray[2];
 
                             try {
                                 Double valueTemperatura = Double.valueOf(sensorTemperatura);
@@ -161,26 +185,81 @@ public class MainActivity extends AppCompatActivity {
                                     imagePosicion.setImageResource(R.drawable.alto_32);
                                 }
 
-                                if(!sensorRespiracion.equals("nan")){
-                                    Double valueRespiracion = Double.valueOf(sensorRespiracion);
-                                    if (valueRespiracion>50){
-                                        txtRespiracion = "El bebe presenta una correcta respiración ";
+                                //REPIRACIÓN
+                                counter ++;
+                                if(counter%256==0) {
+                                    count++;
+                                    if (count == 0) {
+                                        firstTime = sumValue/total;
+                                        sumValue = 0.0;
+                                        total = 0;
+                                    } else if (count == 1) {
+                                        secondTime = sumValue/total;
+                                        sumValue = 0.0;
+                                        total = 0;
+                                    } else if (count == 2) {
+                                        threeTime = sumValue/total;
+                                        sumValue = 0.0;
+                                        total = 0;
+                                        count = -1;
+                                    } else {
+                                        Log.d("Erro sum MainActivity", "");
+                                    }
+                                }else{
+                                    if(!sensorRespiracion.equals("nan")) {
+                                        total++;
+                                        valueRespiracion = Double.valueOf(sensorRespiracion);
+                                        sumValue = sumValue + valueRespiracion;
+                                    }
+                                }
+
+                                if(firstTime!=0.0 && secondTime != 0.0 && threeTime!=0.0){
+                                    Double prom = (firstTime+secondTime+threeTime)/3;
+                                    if (prom>50){
+                                        txtRespiracion = "El bebe presenta una correcta respiración en el ultimo minuto y medio";
                                         respiraacion.setText("Respiración: BAJO");
                                         levelRespiracion = BAJO;
                                         imageRespiracion.setImageResource(R.drawable.bajo_32);
-                                    }else if (valueRespiracion<=50){
-                                        txtRespiracion = "El bebe spresenta una respiración muy lenta";
-                                        respiraacion.setText("Posición: ALTO");
+                                    }else if (prom<=50){
+                                        txtRespiracion = "El bebe spresenta una respiración muy lenta en el ultimo minuto y medio";
+                                        respiraacion.setText("Respiración: MEDIO");
                                         levelRespiracion = MEDIO;
                                         imageRespiracion.setImageResource(R.drawable.medio_32);
                                     }else{
                                         txtRespiracion = "ERROR ";
-                                        respiraacion.setText("Posición: ALTO");
+                                        respiraacion.setText("Respiración: ALTO");
                                         levelRespiracion = ALTO;
                                         imageRespiracion.setImageResource(R.drawable.alto_32);
                                     }
 
+                                }else{
+                                    txtRespiracion = "No se ha generado reporte de respiración durante el ultimo minuto y medio";
+                                    //+sensorRespiracion+"-"+firstTime+"|"+secondTime+"|"+threeTime;
+                                    respiraacion.setText("Respiración: ALTO");
+                                    levelRespiracion = ALTO;
+                                    imageRespiracion.setImageResource(R.drawable.alto_32);
                                 }
+                                //info.setText( dataInPrint+"-->"+ sumValue+"-"+firstTime+"|"+secondTime+"|"+threeTime+"--"+counter+"|"+count);
+
+                                /*
+                                if (valueRespiracion>50){
+                                    txtRespiracion = "El bebe presenta una correcta respiración ";
+                                    respiraacion.setText("Respiración: BAJO");
+                                    levelRespiracion = BAJO;
+                                    imageRespiracion.setImageResource(R.drawable.bajo_32);
+                                }else if (valueRespiracion<=50){
+                                    txtRespiracion = "El bebe spresenta una respiración muy lenta";
+                                    respiraacion.setText("Posición: ALTO");
+                                    levelRespiracion = MEDIO;
+                                    imageRespiracion.setImageResource(R.drawable.medio_32);
+                                }else{
+                                    txtRespiracion = "ERROR ";
+                                    respiraacion.setText("Posición: ALTO");
+                                    levelRespiracion = ALTO;
+                                    imageRespiracion.setImageResource(R.drawable.alto_32);
+                                }*/
+
+
 
                             }catch (Exception e){
                                 Log.d("Error leyendo dato", e.toString());
@@ -247,6 +326,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.add_phrase){
+            startActivity(new Intent(getApplicationContext(), AboutUs.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
