@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GUDBI - Monitor de bebe"
+                    android:text="GUDBI - Monitor de bebé"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="#fff" />
 
@@ -212,6 +212,17 @@
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="9dp"
+            android:background="@android:color/background_light"
+            android:text="." />
 
     </RelativeLayout>
 

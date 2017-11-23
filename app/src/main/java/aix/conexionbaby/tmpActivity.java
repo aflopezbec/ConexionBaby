@@ -20,13 +20,17 @@ public class tmpActivity extends AppCompatActivity {
     private Button temperatura;
     private Button posicion;
     private Button respiraacion;
+    private Button btnTest;
+    private Button btnGeneral;
+    private int flag = 0;
+
     private ImageButton imageTemperatura;
     private ImageButton imagePosicion;
     private ImageButton imageRespiracion;
     private MyGLRenderer mMyGL;
     private AppCompatActivity active;
 
-    private String txtTemperatura,sensorTemperatura;
+    private String txtTemperatura,sensorTemperatura,txtPosicion,txtRespiracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class tmpActivity extends AppCompatActivity {
         mySurfaceView = (GLSurfaceView)findViewById(R.id.my_surface_view);
         temperatura = (Button) findViewById(R.id.btn_temperatura);
         posicion = (Button) findViewById(R.id.btn_posicion);
+        btnTest = (Button) findViewById(R.id.btnTest);
+        btnGeneral = (Button) findViewById(R.id.btn_general);
+
         respiraacion = (Button) findViewById(R.id.btn_respiracion);
         imageTemperatura = (ImageButton) findViewById(R.id.infoTemperatura);
         imageRespiracion = (ImageButton) findViewById(R.id.infoRespiracion);
@@ -54,26 +61,35 @@ public class tmpActivity extends AppCompatActivity {
         mySurfaceView.setRenderer(mMyGL);
         mySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
-        String dataInPrint = "#34.59|-1.68&-0.04|0.00|~";
-        String [] sensorArray = dataInPrint.split("\\|");
-        String [] positionArray = sensorArray[1].split("&");
+       // String dataInPrint = "#34.59|-1.68&-0.04|0.00|~";
+        //String [] sensorArray = dataInPrint.split("\\|");
+        //String [] positionArray = sensorArray[1].split("&");
 
-        sensorTemperatura = sensorArray[0].substring(1);             //get sensor value from string between indices 1-5
-        String sensorPitch = positionArray[0];            //same again...
-        String sensorRoll = positionArray[1];
-        String sensorRespiracion = sensorArray[2];
+        //sensorTemperatura = sensorArray[0].substring(1);             //get sensor value from string between indices 1-5
+        //String sensorPitch = positionArray[0];            //same again...
+        //String sensorRoll = positionArray[1];
+        //String sensorRespiracion = sensorArray[2];
 
         //sensor0 = "34.5";
-        txtTemperatura = "T: "+sensorTemperatura+" Pi: "+sensorPitch+" Roll: "+sensorRoll+" Res: "+sensorRespiracion;
+        //txtTemperatura = "T: "+sensorTemperatura+" Pi: "+sensorPitch+" Roll: "+sensorRoll+" Res: "+sensorRespiracion;
         //float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
         //float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
+        //mMyGL.changeColor(color);
+        txtTemperatura = "La termperatura corporal del bebé es de 36.2 grados. Tiene una temperatura normal.";
+        txtPosicion = "El bebé se encuentra boca arriba hacia la derecha";
+        txtRespiracion = "En el ultimo reporte el bebé presenta una respiración normal";
+
+        imageRespiracion.setImageResource(R.drawable.bajo_32);
+        imagePosicion.setImageResource(R.drawable.bajo_32);
+        imageTemperatura.setImageResource(R.drawable.bajo_32);
+        btnGeneral.setBackgroundColor(Color.parseColor("#5cb85c"));//BAJO :: VERDE
+
+        //float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
         //mMyGL.changeColor(color);
 
         temperatura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
-                mMyGL.changeColor(color);
                 AlertDialog.Builder builder = new AlertDialog.Builder(active);
                 builder.setTitle("Información Temperatura");
                 builder.setMessage(txtTemperatura);//"La temperatura corporal del bebé es de ##.# grados. \nSeria bueno revisar al bebé");
@@ -86,43 +102,93 @@ public class tmpActivity extends AppCompatActivity {
         posicion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
-                mMyGL.changeColor(color);
+                //float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
+                //mMyGL.changeColor(color);
                 AlertDialog.Builder builder = new AlertDialog.Builder(active);
                 builder.setTitle("Información Posición");
-                builder.setMessage("El bebe se encuentra en un poco de lado. \nSeria bueno revisar al bebé");
+                builder.setMessage(txtPosicion);
                 builder.setPositiveButton("OK",null);
                 builder.create();
                 builder.show();
-
-                Double valueTemperatura = Double.valueOf(sensorTemperatura);
-                if (valueTemperatura<35){
-                    txtTemperatura="El bebé se encuentra en una temperatura menor de la normal de "+sensorTemperatura+"°";
-                    temperatura.setText("Temperatura: MEDIO");
-                    imageTemperatura.setImageResource(R.drawable.medio_32);
-                    //temperatura.setBackgroundColor(Color.parseColor("#f0ad4e"));
-                }else if (valueTemperatura>35.4 && valueTemperatura<38.5){
-                    txtTemperatura="El bebé se encuentra en una temperatura normal de "+sensorTemperatura+"°";
-                    temperatura.setText("Temperatura: BAJO");
-                    //temperatura.setBackgroundColor(Color.parseColor("#5cb85c"));
-                }
-                sensorTemperatura = "36.2";
-
-
             }
         });
 
         respiraacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
-                mMyGL.changeColor(color);
+                //float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
+                //mMyGL.changeColor(color);
                 AlertDialog.Builder builder = new AlertDialog.Builder(active);
                 builder.setTitle("Información Respiración");
-                builder.setMessage("La  reespiración del bebé en los ultimos 5 minutos ha sido muy acelerada.");
+                builder.setMessage(txtRespiracion);
                 builder.setPositiveButton("OK",null);
                 builder.create();
                 builder.show();
+
+            }
+        });
+
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag==0){
+                    float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
+                    mMyGL.changeColor(color);
+                    txtTemperatura = "La termperatura corporal del bebé es de 35.4 grados. Tiene una temperatura mas baja de lo normal.";
+                    temperatura.setText("TEMPERATURA: MEDIO");
+                    btnGeneral.setText("RIESGO: MEDIO");
+                    imageTemperatura.setImageResource(R.drawable.medio_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                }else if(flag==1){
+                    float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
+                    mMyGL.changeColor(color);
+                    txtRespiracion = "En el ultimo minuto y medio el bebé presenta una respiración mas lenta de lo normal";
+                    respiraacion.setText("RESPIRACIÓN: MEDIO");
+                    imageRespiracion.setImageResource(R.drawable.medio_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                }else if(flag==2){
+                    float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
+                    mMyGL.changeColor(color);
+                    txtPosicion = "El bebé se encuentra boca abajo hacia la derecha ";
+                    posicion.setText("POSICIÖN: MEDIO");
+                    btnGeneral.setText("RIESGO: ALTO");
+                    imagePosicion.setImageResource(R.drawable.medio_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#d9534f"));
+                }else if(flag==3){
+                    float[] color = { 1.0f, 1.0f, 0f, 1.0f }; //AMARILLO
+                    mMyGL.changeColor(color);
+                    txtTemperatura = "La termperatura corporal del bebé es de 36.4 grados. Tiene una temperatura normal.";
+                    temperatura.setText("TEMPERATURA: BAJO");
+                    btnGeneral.setText("RIESGO: MEDIO");
+                    imageTemperatura.setImageResource(R.drawable.bajo_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#f0ad4e"));
+                }else if(flag==4){
+                    float[] color = { 1.0f, 0f, 0f, 1.0f } ; //ROJO
+                    mMyGL.changeColor(color);
+                    txtTemperatura = "La termperatura corporal del bebé es de 38.5 grados. Tiene una temperatura muy alta";
+                    temperatura.setText("TEMPERATURA: ALTO");
+                    btnGeneral.setText("RIESGO: ALTO");
+                    imageTemperatura.setImageResource(R.drawable.alto_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#d9534f"));
+                }else if(flag==5){
+                    float[] color = { 0f, 1.0f, 0f, 1.0f }; //VERDE
+                    mMyGL.changeColor(color);
+                    temperatura.setText("TEMPERATURA: BAJO");
+                    posicion.setText("POSICIÖN: BAJO");
+                    respiraacion.setText("RESPIRACIÓN: BAJO");
+
+                    btnGeneral.setText("RIESGO: BAJO");
+                    txtTemperatura = "La termperatura corporal del bebé es de 36.2 grados. Tiene una temperatura normal.";
+                    txtPosicion = "El bebé se encuentra boca arriba hacia la derecha";
+                    txtRespiracion = "En el ultimo reporte el bebé presenta una respiración normal";
+
+                    imageRespiracion.setImageResource(R.drawable.bajo_32);
+                    imagePosicion.setImageResource(R.drawable.bajo_32);
+                    imageTemperatura.setImageResource(R.drawable.bajo_32);
+                    btnGeneral.setBackgroundColor(Color.parseColor("#5cb85c"));//BAJO :: VERDE
+                    flag = -1;
+                }
+                flag= flag+1;
 
             }
         });
